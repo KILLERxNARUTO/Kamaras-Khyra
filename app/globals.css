@@ -1,0 +1,354 @@
+@import 'tailwindcss';
+
+/*
+  Dark-first palette — green, gold, black.
+  Body background: --color-rich-black.
+  Headings: --color-cream (light text on dark).
+
+  Contrast on --color-rich-black (#0B1510):
+    cream        18.8:1  headings / body           AAA
+    antique-gold  5.1:1  gold text on dark         AA ✅
+    sage          3.2:1  borders/secondary         (large only)
+
+  Contrast on --color-forest-green (#1F3A2E):
+    cream        12.4:1  headings                  AAA
+    antique-gold  4.7:1  gold text                 AA ✅
+
+  --color-gold-deep retained for any future light-bg context.
+  --color-cream is now a TEXT / ACCENT color only — not used as a background.
+*/
+@theme {
+  /* Dark greens — backgrounds */
+  --color-rich-black: #0b1510;
+  /* body bg, deepest ground         */
+  --color-near-black: #14140f;
+  /* darkest fills, overlays         */
+  --color-forest-green: #1f3a2e;
+  /* section bands, cards, nav       */
+  --color-forest-mid: #2a4a3a;
+  /* slightly lighter section bands  */
+
+  /* Greens — accents */
+  --color-sage: #6b8f71;
+  /* borders, secondary accents      */
+
+  /* Golds — bright vibrant gold */
+  --color-antique-gold: #f5cf47;
+  /* bright radiant gold */
+  --color-gold-light: #ffe57f;
+  /* luminous gold highlight */
+  --color-gold-deep: #e5c158;
+  /* rich bright gold */
+
+  /* Dark luxury fills — green, gold & black */
+  --color-cream: #f8f5ef;
+  /* TEXT on dark, crisp light tone */
+  --color-off-white: #0f1d16;
+  /* DARK green-black fill, never white */
+
+  --font-serif: var(--font-google-sans), var(--font-sans-heading), 'Google Sans', 'Elms Sans', sans-serif;
+  --font-sans: var(--font-google-sans), var(--font-inter), 'Google Sans', sans-serif;
+  --font-accent: var(--font-short-stack), 'Short Stack', cursive;
+
+  --ease-editorial: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-rich-black);
+    color: color-mix(in srgb, var(--color-cream) 85%, transparent);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-serif);
+    color: var(--color-cream);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  ::selection {
+    background-color: var(--color-antique-gold);
+    color: var(--color-near-black);
+  }
+}
+
+/* Helper container class */
+.shell {
+  width: 100%;
+  max-width: 80rem;
+  /* 1280px */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .shell {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .shell {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+/* Editorial baseline typography utilities */
+.font-accent-shortstack {
+  font-family: var(--font-short-stack), 'Short Stack', cursive;
+}
+
+.heading-hero {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  line-height: 1.05;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.heading-section {
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+.heading-card {
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.body-lead {
+  font-size: clamp(1.0625rem, 1.5vw, 1.25rem);
+  line-height: 1.6;
+  color: color-mix(in srgb, var(--color-cream) 80%, transparent);
+}
+
+/* Gold stroke button outline helper */
+.btn-gold-outline {
+  border: 1px solid var(--color-antique-gold);
+  color: var(--color-cream);
+  font-weight: 600;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-gold-outline:hover {
+  background-color: var(--color-antique-gold);
+  color: var(--color-rich-black);
+}
+
+.btn-gold-fill {
+  background-color: var(--color-antique-gold);
+  color: var(--color-rich-black);
+  font-weight: 700;
+  transition: background-color 0.2s ease;
+}
+
+.btn-gold-fill:hover {
+  background-color: var(--color-gold-light);
+}
+
+/* Badge pill helper */
+.badge-gold {
+  background-color: color-mix(in srgb, var(--color-antique-gold) 15%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-antique-gold) 35%, transparent);
+  color: var(--color-antique-gold);
+  font-weight: 600;
+}
+
+/* Thin gold rule used as a section divider. */
+.rule-gold {
+  height: 1px;
+  background: linear-gradient(to right,
+      transparent,
+      var(--color-antique-gold),
+      transparent);
+}
+
+/* Marquee band. The track holds two copies, so -50% is one seamless cycle. */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(calc(-50% - 1.25rem));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Sterling Gate Kinetic Navigation Styles */
+.nav-overlay-wrapper {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+}
+
+.nav-overlay-wrapper[data-nav="open"] {
+  display: block;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(11, 21, 16, 0.85);
+  backdrop-filter: blur(16px);
+  z-index: 1;
+}
+
+.menu-content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  max-width: 680px;
+  height: 100dvh;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow-y: auto;
+  padding: 3rem 4rem;
+}
+
+.menu-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.backdrop-layer {
+  position: absolute;
+  inset: 0;
+  background: #0b1510;
+  border-left: 1px solid rgba(184, 150, 62, 0.15);
+}
+
+.backdrop-layer.first {
+  background: #14221a;
+}
+
+.backdrop-layer.second {
+  background: #0f1c15;
+}
+
+.ambient-background-shapes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.bg-shape {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.bg-shape.active {
+  opacity: 1;
+}
+
+.menu-content-wrapper {
+  position: relative;
+  z-index: 3;
+}
+
+.menu-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.menu-list-item {
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.25rem;
+  text-decoration: none;
+  color: #f8f5ef;
+  font-family: var(--font-google-sans), var(--font-sans-heading), 'Google Sans', 'Elms Sans', sans-serif;
+  font-size: 2.75rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #b8963e;
+  transform: translateX(8px);
+}
+
+.nav-close-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(10, 10, 10, 0.8);
+  border: 1px solid rgba(248, 245, 239, 0.25);
+  border-radius: 9999px;
+  padding: 0.6rem 1.5rem;
+  color: #f8f5ef;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.nav-close-btn:hover {
+  background: rgba(184, 150, 62, 0.25);
+  border-color: #b8963e;
+  color: #b8963e;
+}
+
+@media (max-width: 640px) {
+  .menu-content {
+    max-width: 100%;
+    padding: 2rem 1.5rem;
+  }
+
+  .nav-link {
+    font-size: 2rem;
+  }
+}

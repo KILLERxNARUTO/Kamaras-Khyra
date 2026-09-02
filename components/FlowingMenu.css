@@ -1,0 +1,115 @@
+/* FlowingMenu.css — Kamars Khyra Brand Adapted */
+.flowing-menu-wrap {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  background-color: transparent;
+}
+
+.flowing-menu {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.flowing-menu__item {
+  position: relative;
+  overflow: hidden;
+  text-align: left;
+  border-top: 1px solid rgba(107, 143, 113, 0.2); /* sage border */
+  min-height: 5rem;
+}
+
+.flowing-menu__item:last-child {
+  border-bottom: 1px solid rgba(107, 143, 113, 0.2);
+}
+
+.flowing-menu__item-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1.75rem 1rem;
+  position: relative;
+  cursor: pointer;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3.5vw, 2.75rem);
+  letter-spacing: -0.01em;
+  color: #f8f5ef;
+  transition: color 0.3s ease;
+}
+
+@media (min-width: 640px) {
+  .flowing-menu__item-link {
+    padding: 2.25rem 2rem;
+  }
+}
+
+.flowing-menu__item-link:hover {
+  color: #f5cf47;
+}
+
+.flowing-menu__marquee {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  transform: translate3d(0, 101%, 0);
+  background-color: #f5cf47; /* Antique Gold */
+  z-index: 10;
+}
+
+.flowing-menu__marquee-inner-wrap {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.flowing-menu__marquee-inner {
+  display: flex;
+  align-items: center;
+  position: relative;
+  height: 100%;
+  width: fit-content;
+  will-change: transform;
+}
+
+.flowing-menu__marquee-part {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  color: #0b1510; /* Rich Black text on Gold background */
+  font-family: var(--font-serif);
+}
+
+.flowing-menu__marquee span {
+  white-space: nowrap;
+  text-transform: uppercase;
+  font-weight: 800;
+  font-size: clamp(1.5rem, 3.5vw, 2.75rem);
+  line-height: 1;
+  padding: 0 1.5vw;
+  letter-spacing: -0.01em;
+}
+
+.flowing-menu__marquee-img {
+  width: 160px;
+  height: 3.5rem;
+  margin: 0 1.5vw;
+  border-radius: 9999px;
+  background-size: cover;
+  background-position: center;
+  border: 2px solid rgba(11, 21, 16, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
