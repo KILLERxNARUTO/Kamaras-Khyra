@@ -37,7 +37,28 @@ Clinic Location: Poonamallee, Chennai`;
     console.log(`[BACKEND AGENT] New booking ${bookingId} received:`);
     console.log(notificationText);
 
-    // 2. Automated Webhook / WhatsApp API Dispatch (e.g. Twilio, UltraMsg, WATI, Make.com, Zapier)
+    // 2. Automated Baileys WhatsApp Service Dispatch (free self-hosted bot)
+    const backendPort = process.env.PORT || 5000;
+    try {
+      await fetch(`http://127.0.0.1:${backendPort}/api/bookings`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customerName: name,
+          phone,
+          serviceName: Array.isArray(treatments) ? treatments.join(', ') : 'General Consultation',
+          date: date || 'Requested Date',
+          time: slot || 'Requested Time',
+          bookingRef: bookingId,
+          notes,
+        }),
+      });
+      console.log('[BACKEND AGENT] WhatsApp notification forwarded to local Baileys bot.');
+    } catch (baileysErr) {
+      console.warn('[BACKEND AGENT] Local Baileys bot service unreachable on port', backendPort);
+    }
+
+    // 3. Automated Webhook / WhatsApp API Dispatch (e.g. Twilio, UltraMsg, WATI, Make.com, Zapier)
     const webhookUrl = process.env.WHATSAPP_WEBHOOK_URL || process.env.BOOKING_NOTIFICATION_WEBHOOK;
     const whatsappToken = process.env.WHATSAPP_API_TOKEN;
 

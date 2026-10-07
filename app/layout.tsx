@@ -4,6 +4,7 @@ import './globals.css';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import FloatingBookCta from '@/components/FloatingBookCta';
+import { FloatingWhatsAppButton } from '@/components/WhatsAppCTA';
 import IntroReveal from '@/components/IntroReveal';
 import { site } from '@/data/site';
 
@@ -68,6 +69,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main id="main">{children}</main>
         <SiteFooter />
         <FloatingBookCta />
+        <FloatingWhatsAppButton />
       </body>
     </html>
   );

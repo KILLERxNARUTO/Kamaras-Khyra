@@ -198,6 +198,26 @@ export async function POST(request: Request) {
       ),
     ]);
 
+    // Forward to self-hosted Baileys bot service if running
+    const backendPort = process.env.PORT || 5000;
+    try {
+      await fetch(`http://127.0.0.1:${backendPort}/api/bookings`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customerName: name,
+          phone: cleanedCustomerPhone,
+          serviceName: service,
+          date,
+          time: slot,
+          bookingRef: bookingId,
+          notes,
+        }),
+      });
+    } catch {
+      // Baileys standalone server not currently active, handled gracefully
+    }
+
     const customerStatus = customerResult.status === 'fulfilled' ? 'Sent' : 'Failed';
     const shopStatus = shopResult.status === 'fulfilled' ? 'Sent' : 'Failed';
 
